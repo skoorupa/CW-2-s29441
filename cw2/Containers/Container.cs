@@ -4,17 +4,19 @@ public class Container
 {
     public virtual string Type => "C";
     private static int _numberCounter = 0;
+    
     private Product? _product;
+    public Product Product { get; }
 
-    private double _loadMassKg;
-    public double LoadMassKg
+    protected double _loadMassKg;
+    public virtual double LoadMassKg
     {
         get => _loadMassKg;
-        private set
+        protected set
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException("Product's mass cannot be lower than zero");
-            if (value > _maxLoadMassKg)
+            if (value > MaxLoadMassKg)
                 throw new OverfillException(this, value);
             _loadMassKg = value;
         }
