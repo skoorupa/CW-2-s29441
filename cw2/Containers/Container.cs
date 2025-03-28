@@ -1,24 +1,88 @@
 ﻿namespace cw2;
 
-abstract class Container(double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
+public class Container
 {
-    private static string _typeLetter = "C";
-    private static int _numberCounter = 1;
-    
-    public double LoadMassKg { get; private set; } = 0;
-    public double MaxLoadMassKg { get; set; } = maxLoadMassKg;
-    public double ContainerMassKg { get; set; } = containerMassKg;
-    public double HeightCm { get; set; } = heightCm;
-    public double DepthCm { get; set; } = depthCm;
-    public string SerialNumber { get; } = $"KON-{_typeLetter}-{_numberCounter++}";
-    
-    public void Empty() => LoadMassKg = 0;
+    public virtual string Type => "C";
+    private static int _numberCounter = 0;
+    private Product? _product;
 
-    public void Fill(double massKg)
+    private double _loadMassKg;
+    public double LoadMassKg
     {
-        if (massKg + LoadMassKg > MaxLoadMassKg)
-            throw new OverfillException(this, massKg);
-        
+        get => _loadMassKg;
+        private set
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException("Product's mass cannot be lower than zero");
+            if (value > _maxLoadMassKg)
+                throw new OverfillException(this, value);
+            _loadMassKg = value;
+        }
+    }
+
+    private double _maxLoadMassKg;
+    public double MaxLoadMassKg
+    {
+        get => _maxLoadMassKg;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException("Container's max load cannot be lower or equal to zero");
+            if (value < LoadMassKg)
+                throw new ArgumentException("Container's max load mass cannot be lower than current's load mass");
+            _maxLoadMassKg = value;
+        }
+    }
+
+    private double _containerMassKg;
+    public double ContainerMassKg
+    {
+        get => _containerMassKg;
+        set
+        {
+            if (value <= 0) 
+                throw new ArgumentOutOfRangeException("Container's mass cannot be lower or equal to zero");
+            _containerMassKg = value;
+        }
+    }
+    
+    private double _heightCm;
+    public double HeightCm
+    {
+        get => _heightCm;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException("Container's height cannot be lower or equal to zero");
+            _heightCm = value;
+        }
+    }
+    private double _depthCm;
+    public double DepthCm
+    {
+        get => _depthCm;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException("Container's depth cannot be lower or equal to zero");
+            _depthCm = value;
+        }
+    }
+    public string SerialNumber { get; }
+
+    public Container(double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
+    {
+        MaxLoadMassKg = maxLoadMassKg;
+        ContainerMassKg = containerMassKg;
+        HeightCm = heightCm;
+        DepthCm = depthCm;
+        SerialNumber = $"KON-{Type}-{++_numberCounter}";
+    }
+
+    public virtual void Empty() => LoadMassKg = 0;
+
+    public virtual void Fill(double massKg)
+    {
         LoadMassKg += massKg;
     }
 }
