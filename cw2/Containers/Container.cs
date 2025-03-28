@@ -1,15 +1,15 @@
 ﻿namespace cw2;
 
-public class Container
+public abstract class Container
 {
-    public virtual string Type => "C";
+    public abstract string Type();
     private static int _numberCounter = 0;
     
     private Product? _product;
     public Product Product { get; }
 
-    protected double _loadMassKg;
-    public virtual double LoadMassKg
+    private double _loadMassKg;
+    public double LoadMassKg
     {
         get => _loadMassKg;
         protected set
@@ -80,13 +80,10 @@ public class Container
         DepthCm = depthCm;
         SerialNumber = $"KON-{Type}-{++_numberCounter}";
     }
-
+    
+    public virtual void Fill(double massKg) => LoadMassKg += massKg;
+    
     public virtual void Empty() => LoadMassKg = 0;
-
-    public virtual void Fill(double massKg)
-    {
-        LoadMassKg += massKg;
-    }
 }
 
 class OverfillException : Exception

@@ -4,25 +4,17 @@ public class FluidContainer(double maxLoadMassKg, double containerMassKg, double
     : Container(maxLoadMassKg, containerMassKg, heightCm, depthCm),
         IHazardNotifier
 {
-    public override string Type => "L";
-    
-    public override double LoadMassKg
+    public override string Type() => "L";
+
+    public override void Fill(double massKg)
     {
-        get => _loadMassKg;
-        protected set
-        {
-            if (value < 0)
-                throw new ArgumentOutOfRangeException("Product's mass cannot be lower than zero");
-            if (value > MaxLoadMassKg)
-                throw new OverfillException(this, value);
-            if (
-                (Product is HazardProduct && value > 0.5 * MaxLoadMassKg) ||
-                value > 0.9*MaxLoadMassKg
-                )
-                NotifyHazard();
-            
-            _loadMassKg = value;
-        }
+        if (
+            (Product is HazardProduct && massKg > 0.5 * MaxLoadMassKg) ||
+            massKg > 0.9*MaxLoadMassKg
+        )
+            NotifyHazard();
+        
+        base.Fill(massKg);
     }
 
     public void NotifyHazard()
