@@ -1,7 +1,7 @@
 ﻿namespace cw2;
 
-public class FluidContainer(double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
-    : Container(maxLoadMassKg, containerMassKg, heightCm, depthCm),
+public class FluidContainer(Product product, double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
+    : Container(product, maxLoadMassKg, containerMassKg, heightCm, depthCm),
         IHazardNotifier
 {
     public override string Type() => "L";

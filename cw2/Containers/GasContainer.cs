@@ -1,11 +1,11 @@
 ﻿namespace cw2;
 
-public class GasContainer(double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm, double pressurePa)
-    : Container(maxLoadMassKg, containerMassKg, heightCm, depthCm),
+public class GasContainer(Product product, double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm, double pressureAtm)
+    : Container(product, maxLoadMassKg, containerMassKg, heightCm, depthCm),
         IHazardNotifier
 {
     public override string Type() => "G";
-    public double PressurePa { get; set; } = pressurePa;
+    public double PressureAtm { get; set; } = pressureAtm;
 
     public override void Fill(double massKg)
     {

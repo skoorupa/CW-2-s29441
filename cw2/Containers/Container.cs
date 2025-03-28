@@ -72,8 +72,9 @@ public abstract class Container
     }
     public string SerialNumber { get; }
 
-    public Container(double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
+    public Container(Product product, double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)
     {
+        Product = product;
         MaxLoadMassKg = maxLoadMassKg;
         ContainerMassKg = containerMassKg;
         HeightCm = heightCm;
