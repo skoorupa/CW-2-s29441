@@ -5,7 +5,6 @@ public abstract class Container
     public abstract string Type();
     private static int _numberCounter = 0;
     
-    private Product? _product;
     public Product Product { get; }
 
     private double _loadMassKg;
@@ -79,12 +78,26 @@ public abstract class Container
         ContainerMassKg = containerMassKg;
         HeightCm = heightCm;
         DepthCm = depthCm;
-        SerialNumber = $"KON-{Type}-{++_numberCounter}";
+        SerialNumber = $"KON-{Type()}-{++_numberCounter}";
     }
     
     public virtual void Fill(double massKg) => LoadMassKg += massKg;
     
     public virtual void Empty() => LoadMassKg = 0;
+
+    public override string ToString()
+    {
+        return $"""
+                Container(
+                    s/n={SerialNumber}, 
+                    Product={Product},
+                    MaxLoadMassKg={MaxLoadMassKg},
+                    ContainerMassKg={ContainerMassKg},
+                    HeightCm={HeightCm},
+                    DepthCm={DepthCm}
+                )
+                """;
+    }
 }
 
 class OverfillException : Exception

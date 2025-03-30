@@ -22,4 +22,9 @@ public class Product
         Name = name;
         IsHazardous = isHazardous;
     }
+
+    public override string ToString()
+    {
+        return $"Product({Name},IsHazardous={IsHazardous},MinTemperatureCls={MinTemperatureCls})";
+    }
 }

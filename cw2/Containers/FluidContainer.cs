@@ -20,5 +20,10 @@ public class FluidContainer(Product product, double maxLoadMassKg, double contai
     public void NotifyHazard()
     {
         Console.WriteLine($"!!! Hazard at container {SerialNumber}");
-    } 
+    }
+
+    public override string ToString()
+    {
+        return $"""Fluid({base.ToString()})""";
+    }
 }

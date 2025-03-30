@@ -27,4 +27,9 @@ public class GasContainer(Product product, double maxLoadMassKg, double containe
     {
         Console.WriteLine($"!!! Hazard at container {SerialNumber}");
     } 
+    
+    public override string ToString()
+    {
+        return $"""Gas({base.ToString()}, PressureAtm={PressureAtm})""";
+    }
 }
