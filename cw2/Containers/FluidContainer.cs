@@ -9,7 +9,7 @@ public class FluidContainer(Product product, double maxLoadMassKg, double contai
     public override void Fill(double massKg)
     {
         if (
-            (Product is HazardProduct && massKg > 0.5 * MaxLoadMassKg) ||
+            (Product.IsHazardous && massKg > 0.5 * MaxLoadMassKg) ||
             massKg > 0.9*MaxLoadMassKg
         )
             NotifyHazard();

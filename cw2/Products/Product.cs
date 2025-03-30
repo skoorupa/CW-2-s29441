@@ -4,6 +4,7 @@ public class Product
 {
     public string Name { get; set; }
     public double? MinTemperatureCls { get; set; }
+    public bool IsHazardous { get; set; }
 
     public Product(string name)
     {
@@ -14,5 +15,11 @@ public class Product
     {
         Name = name;
         MinTemperatureCls = minTemperatureCls;
+    }
+    
+    public Product(string name, bool isHazardous)
+    {
+        Name = name;
+        IsHazardous = isHazardous;
     }
 }
