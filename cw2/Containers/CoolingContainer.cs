@@ -11,7 +11,7 @@ public class CoolingContainer : Container
         
         // wg wymagań, na logike powinno być na odwrót?
         if (temperatureCls < product.MinTemperatureCls && product.MinTemperatureCls != null)
-            throw new ArgumentOutOfRangeException("Container's temperature cannot be lower than product's minimum temperature.");
+            throw new ArgumentException("Container's temperature cannot be lower than product's minimum temperature.");
     }
 
     public override string ToString()

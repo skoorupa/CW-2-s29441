@@ -14,7 +14,7 @@ public abstract class Container
         protected set
         {
             if (value < 0)
-                throw new ArgumentOutOfRangeException("Product's mass cannot be lower than zero");
+                throw new ArgumentException("Product's mass cannot be lower than zero");
             if (value > MaxLoadMassKg)
                 throw new OverfillException(this, value);
             _loadMassKg = value;
@@ -28,7 +28,7 @@ public abstract class Container
         set
         {
             if (value <= 0)
-                throw new ArgumentOutOfRangeException("Container's max load cannot be lower or equal to zero");
+                throw new ArgumentException("Container's max load cannot be lower or equal to zero");
             if (value < LoadMassKg)
                 throw new ArgumentException("Container's max load mass cannot be lower than current's load mass");
             _maxLoadMassKg = value;
@@ -42,7 +42,7 @@ public abstract class Container
         set
         {
             if (value <= 0) 
-                throw new ArgumentOutOfRangeException("Container's mass cannot be lower or equal to zero");
+                throw new ArgumentException("Container's mass cannot be lower or equal to zero");
             _containerMassKg = value;
         }
     }
@@ -54,7 +54,7 @@ public abstract class Container
         set
         {
             if (value <= 0)
-                throw new ArgumentOutOfRangeException("Container's height cannot be lower or equal to zero");
+                throw new ArgumentException("Container's height cannot be lower or equal to zero");
             _heightCm = value;
         }
     }
@@ -65,10 +65,12 @@ public abstract class Container
         set
         {
             if (value <= 0)
-                throw new ArgumentOutOfRangeException("Container's depth cannot be lower or equal to zero");
+                throw new ArgumentException("Container's depth cannot be lower or equal to zero");
             _depthCm = value;
         }
     }
+
+    public double TotalMassKg => LoadMassKg + ContainerMassKg;
     public string SerialNumber { get; }
 
     public Container(Product product, double maxLoadMassKg, double containerMassKg, double heightCm, double depthCm)

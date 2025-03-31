@@ -12,7 +12,7 @@ public abstract class CargoVehicle
         set
         {
             if (value < Containers.Count)
-                throw new ArgumentOutOfRangeException("Vehicle's max containers cannot be less than the number of containers");
+                throw new ArgumentException("Vehicle's max containers cannot be less than the number of containers");
             _maxContainers = value;
         }
     }
@@ -24,7 +24,7 @@ public abstract class CargoVehicle
         set
         {
             if (value < 0)
-                throw new ArgumentOutOfRangeException("Vehicle's max load mass kg cannot be less than zero");
+                throw new ArgumentException("Vehicle's max load mass kg cannot be less than zero");
             if (value < ContainersMaxLoadMassKg)
                 throw new ArgumentException("Vehicle's max load mass kg cannot be less than max load mass kg for all containers combined"); 
             _maxLoadMassKg = value;
@@ -62,9 +62,9 @@ public abstract class CargoVehicle
 
     public void AddContainer(Container container)
     {
-        if (Containers.Count > MaxContainers)
+        if (Containers.Count >= MaxContainers)
             throw new ArgumentException("Container count cannot be larger than vehicle's capacity");
-        if (ContainersMaxLoadMassKg + container.MaxLoadMassKg > MaxLoadMassKg)
+        if (ContainersMaxLoadMassKg + container.TotalMassKg > MaxLoadMassKg)
             throw new ArgumentException("Max load for all containers combined needs to be lower than vehicle's max load mass kg");
         if (IsContainerInCargo(container))
             throw new ArgumentException("Container is already in this cargo");
