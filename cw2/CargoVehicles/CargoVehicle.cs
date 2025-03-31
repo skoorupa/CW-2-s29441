@@ -25,7 +25,7 @@ public abstract class CargoVehicle
         {
             if (value < 0)
                 throw new ArgumentException("Vehicle's max load mass kg cannot be less than zero");
-            if (value < ContainersMaxLoadMassKg)
+            if (value < ContainersMaxTotalMassKg)
                 throw new ArgumentException("Vehicle's max load mass kg cannot be less than max load mass kg for all containers combined"); 
             _maxLoadMassKg = value;
         }
@@ -47,14 +47,14 @@ public abstract class CargoVehicle
         }
         return false;
     }
-
-    public double ContainersMaxLoadMassKg
+    
+    public double ContainersMaxTotalMassKg
     {
         get
         {
             double total = 0;
             foreach (var container in Containers)
-                total += container.MaxLoadMassKg;
+                total += container.MaxTotalMassKg;
             
             return total;
         }
@@ -64,7 +64,7 @@ public abstract class CargoVehicle
     {
         if (Containers.Count >= MaxContainers)
             throw new ArgumentException("Container count cannot be larger than vehicle's capacity");
-        if (ContainersMaxLoadMassKg + container.TotalMassKg > MaxLoadMassKg)
+        if (ContainersMaxTotalMassKg + container.MaxTotalMassKg  > MaxLoadMassKg)
             throw new ArgumentException("Max load for all containers combined needs to be lower than vehicle's max load mass kg");
         if (IsContainerInCargo(container))
             throw new ArgumentException("Container is already in this cargo");
@@ -119,7 +119,7 @@ public abstract class CargoVehicle
                 CargoVehicle(
                     MaxContainers: {MaxContainers}
                     MaxLoadMassKg: {MaxLoadMassKg}
-                    ContainersMaxLoadMassKg: {ContainersMaxLoadMassKg}
+                    ContainersMaxTotalMassKg: {ContainersMaxTotalMassKg}
                     Containers:
                 [{string.Join(",", Containers)}]
                 )
